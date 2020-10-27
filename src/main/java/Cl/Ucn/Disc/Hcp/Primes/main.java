@@ -33,7 +33,8 @@ public class main {
      * @return true is n is prime.
      */
     public static boolean isPrime(final long n){
-
+/*
+        //OPCION 1
         if(n<=0){
             throw new IllegalArgumentException("Error n no es primo");
         }
@@ -48,6 +49,24 @@ public class main {
                 return false;
             }
         }
+*/
+/*
+        //OPCION 2
+        long contador = 2;
+        while (contador!=n){
+
+            if (n % contador == 0)
+                return false;
+            contador++;
+        }
+*/
+        //OPCION 3
+        for(int i = 2; i * i <= n; i++){
+            if( n % i == 0 ){
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -57,7 +76,7 @@ public class main {
      */
     public static void main(String[] args) throws InterruptedException {
 
-            int nHilos = 16;
+            int nHilos = 4;
 
             log.debug("INICIANDO TAREA CON {} HILO", nHilos);
 
@@ -69,6 +88,9 @@ public class main {
             final ExecutorService executorService = Executors.newFixedThreadPool(nHilos);
 
             /*
+
+            78498 primos
+
             334455ms 1 hilo
             174221ms 2 hilos
             119004ms 3 hilos
@@ -85,6 +107,11 @@ public class main {
             88813ms 14 hilos
             88824ms 15 hilos
             88731ms 16 hilos
+
+            1.000.000 numeros :
+            25320ms  4 hilos        OPCION 1
+            25169ms  4 hilos        OPCION 2
+            820ms    4 hilos        OPCION 3
              */
             for(long x = 2; x <= 1000000; x++){
                 executorService.submit(new Tarea(x));
